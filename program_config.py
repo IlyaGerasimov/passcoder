@@ -7,7 +7,7 @@ import hashlib
 
 
 def init_passcoder():
-    cipher = RSASign(256)
+    cipher = RSASign(512)
     with open("./passcoder/private", 'wb') as f:
         f.write(b'-----BEGIN RSA PRIVATE KEY-----' +
                 bytes(os.linesep, "ascii") + base64.b32encode(customtypes.type_bytes(cipher.p)) +
@@ -37,7 +37,7 @@ def get_private_key():
         title = f.readline().strip('\n')
         if title != '-----END RSA PRIVATE KEY-----':
             exit("Wrong file format")
-        return RSASign(256, p=p, q=q, e=e)
+        return RSASign(512, p=p, q=q, e=e)
 
 
 def get_public_key():
@@ -50,7 +50,7 @@ def get_public_key():
         title = f.readline().strip('\n')
         if title != '-----END RSA PUBLIC KEY-----':
             exit("Wrong file format")
-        return RSASign(256, e=e, n=n)
+        return RSASign(512, e=e, n=n)
 
 
 def get_public_rabin(f):
@@ -79,7 +79,7 @@ def get_private_rabin(f, hash):
     title = f.readline().strip('\n')
     if title != '-----END RABIN PRIVATE KEY-----':
         return "Wrong format."
-    return Rabin(256, p=p, q=q)
+    return Rabin(512, p=p, q=q)
 
 
 def change_passcoder():
@@ -88,7 +88,7 @@ def change_passcoder():
     q = int(input("Please specify the second prime: "))
     e = int(input("Please specify the cipher exponent: "))
     curr_cipher = get_private_key()
-    cipher = RSASign(256, p, q, e)
+    cipher = RSASign(512, p, q, e)
     print("Updating specified signatures:")
     directory = os.fsencode(source)
     for file in os.listdir(directory):

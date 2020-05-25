@@ -21,7 +21,7 @@ def cipher_pwd():
         exit("Wrong file format.")
     if not signer.verify(n, sig):
         exit("Invalid public key signature.")
-    cipher = Rabin(256, n=n)
+    cipher = Rabin(512, n=n)
     passw = getpass.getpass("Please create your password: ")
     h = hashlib.sha256()
     h.update(bytes(passw, 'utf-8'))

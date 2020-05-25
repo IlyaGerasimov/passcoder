@@ -4,6 +4,7 @@ import math
 import base64
 import hashlib
 import customtypes
+from calc import pow
 
 
 def reverse(a, b):
@@ -32,15 +33,18 @@ def get_secure_prime_p_1(k):
 
 
 def get_secure_e_d(p, q):
+    p_calc = int(math.sqrt(p))
+    q_calc = int(math.sqrt(q))
+    bound = p_calc * q_calc
     phi_n = (p - 1) * (q - 1)
-    e = random.randint(65536, int(phi_n ** 0.5 / 4))
+    e = random.randint(65536, int(bound / 4))
     while math.gcd(e, phi_n) != 1:
-        e = random.randint(65536, phi_n ** 0.5 / 4)
+        e = random.randint(65536, int(bound / 4))
     d = reverse(e, phi_n)
-    while d < 0.2 * ((p * q) ** 0.25) or d == e:
-        e = random.randint(65536, int(phi_n ** 0.5 / 4))
+    while d < 0.2 * (p_calc * q_calc) or d == e:
+        e = random.randint(65536, int(bound / 4))
         while math.gcd(e, phi_n) != 1:
-            e = random.randint(65536, phi_n ** 0.5 / 4)
+            e = random.randint(65536, int(bound / 4))
         d = reverse(e, phi_n)
     return e, d
 
@@ -70,6 +74,8 @@ class RSASign:
         else:
             self.p, self.q = get_secure_prime_p_1(k)
         if e:
+            p_calc = int(math.sqrt(self.p))
+            q_calc = int(math.sqrt(self.q))
             e = customtypes.type_int(e, True)
             if math.gcd(e, (p - 1)*(q - 1)) != 1:
                 exit("Cannot use such parameters for RSA signature.")
@@ -77,7 +83,7 @@ class RSASign:
                 print("Warning: Specified encryption exponent is too small.")
             self.e = e
             self.d = reverse(self.e, (self.p - 1) * (self.q - 1))
-            if self.d < 0.2 * ((self.p * self.q) ** 0.2):
+            if self.d < 0.2 * ((p_calc * q_calc) ** 0.2):
                 print("Warning: Decryption exponent is too small.")
         else:
             self.e, self.d = get_secure_e_d(self.p, self.q)

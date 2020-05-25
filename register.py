@@ -35,7 +35,7 @@ def register(rsa):
     with open("./passcoder/users.json", "w") as f:
         json.dump(data, f)
     print("\nGenerating your keypair.")
-    cipher = Rabin(256)
+    cipher = Rabin(512)
     print("Done.")
     print("\nSigning the public key.")
     temp, signature = rsa.sign(cipher.n)

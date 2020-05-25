@@ -1,6 +1,6 @@
 import random
 import math
-
+from calc import pow
 
 def is_prime(p, k):
     if p%2 == 0 or p%3 == 0 or p%5 == 0 or p%7 == 0 or p%11 == 0:

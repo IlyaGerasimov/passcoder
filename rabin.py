@@ -2,6 +2,7 @@ import random
 import math
 import base64
 from prime import get_prime_big_p_1
+from calc import pow
 import customtypes
 import sys
 
@@ -165,26 +166,3 @@ class Rabin:
             except UnicodeDecodeError:
                 res.pop(i)
         return res
-
-
-#p = get_prime_big_p_1(256)
-'''p = 101
-a = random.randint(2, p - 1)
-a = pow(a, 2, p)
-print(a)
-x = pow(a, (p + 1) // 4, p)
-print(x)
-print(pow(x, 2, p))
-cipher = Rabin(256)#, p=101, q=89)
-print(cipher.n)
-m = b"hi"
-print(m.hex())
-m_num = customtypes.type_int(m)
-print(m_num % cipher.n)
-print(m)
-c = cipher.encrypt(m)
-c_num = customtypes.type_int(c, True)
-print(c_num % cipher.n)
-n = cipher.decrypt(c)
-print(n)
-print(type(n[0]))'''
