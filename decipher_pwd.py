@@ -33,6 +33,11 @@ def decipher_pwd():
     if type(cipher) == str:
         exit(cipher)
     passw = input("Please specify the encrypted password you want to decrypt: ")
+    while '|' not in passw:
+        passw = input("Wrong format. Please try again: ")
+    passw, n = passw.split('|', 1)
+    if customtypes.type_int(n, True) != cipher.n:
+        exit("Ciphertext cannot be decrypted with this key.")
     print("\nPerforming operation..")
     decr = cipher.decrypt(passw)
     print("Done. Here is list of possible passwords:")

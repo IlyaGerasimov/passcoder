@@ -97,7 +97,6 @@ class RSASign:
         h = hashlib.sha512()
         h.update(m)
         h_int = customtypes.type_int(h.digest())
-        print(h_int)
         c = pow(h_int, self.d, self.n)
         c = base64.b32encode(customtypes.type_bytes(c, False))
         return m, c

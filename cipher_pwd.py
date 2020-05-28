@@ -1,6 +1,8 @@
 import pathlib
 import getpass
 import hashlib
+import customtypes
+import base64
 import os
 from program_config import get_public_rabin, get_public_key
 from rabin import Rabin
@@ -53,7 +55,7 @@ def cipher_pwd():
     res = str(cipher.encrypt(passw), "ascii")
     print("Done. Here is your encrypted password:")
     print()
-    print(res)
+    print(res + '|' + str(base64.b32encode(customtypes.type_bytes(cipher.n)), "ascii"))
     print()
     answer = input("\nDo you want to save it? ").lower()
     if answer in ['yes', 'y', 'да', 'д']:

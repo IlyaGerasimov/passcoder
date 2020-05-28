@@ -155,9 +155,6 @@ class Rabin:
         m_plus = (m_1 * self.q * reverse(self.q % self.p, self.p) + m_2 * self.p * reverse(self.p % self.q, self.q)) % self.n
         m_minus = (m_1 * self.q * reverse(self.q % self.p, self.p) - m_2 * self.p * reverse(self.p % self.q, self.q)) % self.n
         res = [m_plus, m_minus, (-m_plus) % self.n, (-m_minus) % self.n]
-        for elem in res:
-            if pow(elem, 2, self.n) != c:
-                return None
         i = 0
         while i < len(res):
             try:
